@@ -1,0 +1,1 @@
+git log --pretty=format:%ct,%ci,%h,%ae,%s > ~/Desktop/kmk_ios.csv
