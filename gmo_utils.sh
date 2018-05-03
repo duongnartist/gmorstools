@@ -9,3 +9,7 @@ gmo_cur_branch() {
 gmo_push() {
     git push origin $(gmo_cur_branch)
 }
+
+gmo_add_commit() {
+    git add . && git commit -m "$1"
+}
