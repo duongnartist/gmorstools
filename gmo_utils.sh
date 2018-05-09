@@ -10,6 +10,14 @@ gg_push() {
     git push origin $(gg_cur_branch)
 }
 
+gg_merge() {
+    git merge "$1"
+}
+
+gg_checkout() {
+    git checkout "$1"
+}
+
 gg_add_commit() {
     git add . && git commit -m "$1"
 }
@@ -18,12 +26,8 @@ gg_new_branch() {
     git checkout -b "$1"
 }
 
-gg_one_day_ago() {
-    date -v-1d +%Y-%m-%d
-}
-
-gg_two_day_ago() {
-    date -v-2d +%Y-%m-%d
+gg_today() {
+    git log --author="duongnt1@runsystem.net" --after=$(gg_one_day_ago)
 }
 
 gg_log() {
@@ -34,8 +38,20 @@ gg_reset() {
     git reset --hard HEAD
 }
 
+gg_status() {
+    git status
+}
+
+gg_one_day_ago() {
+    date -v-1d +%Y-%m-%d
+}
+
+gg_two_day_ago() {
+    date -v-2d +%Y-%m-%d
+}
+
 video2gif() {
-ffmpeg -y -i "${1}" -vf fps=${3:-10},scale=${2:-320}:-1:flags=lanczos,palettegen "${1}.png"
-ffmpeg -i "${1}" -i "${1}.png" -filter_complex "fps=${3:-10},scale=${2:-320}:-1:flags=lanczos[x];[x][1:v]paletteuse" "${1}".gif
-rm "${1}.png"
+    ffmpeg -y -i "${1}" -vf fps=${3:-10},scale=${2:-320}:-1:flags=lanczos,palettegen "${1}.png"
+    ffmpeg -i "${1}" -i "${1}.png" -filter_complex "fps=${3:-10},scale=${2:-320}:-1:flags=lanczos[x];[x][1:v]paletteuse" "${1}".gif
+    rm "${1}.png"
 }
