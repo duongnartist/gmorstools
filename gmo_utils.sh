@@ -2,12 +2,16 @@ gg_dev_pull() {
     gg_fetch && gg_checkout develop && gg_pull
 }
 
+gg_branches() {
+  git branch -a
+}
+
 gg_cur_branch() {
-    git branch -a | grep "*" | sed 's/* //g'
+    gg_branches | grep "*" | sed 's/* //g'
 }
 
 gg_find_branch() {
-    git branch -a | grep "$1"
+    gg_branches | grep "$1"
 }
 
 gg_push() {
