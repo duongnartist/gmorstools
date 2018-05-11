@@ -26,11 +26,19 @@ gg_new_branch() {
     git checkout -b "$1"
 }
 
-gg_today() {
-    git log --author=$(whoami) --after=$(gg_one_day_ago)
+gg_log_of() {
+    git log --author="$1"
 }
 
 gg_log() {
+    git log --author=$(whoami)
+}
+
+gg_log_today() {
+    git log --author=$(whoami) --after=$(gg_one_day_ago)
+}
+
+gg_log_yesterday() {
     git log --author=$(whoami) --after=$(gg_two_day_ago) --before=$(gg_one_day_ago)
 }
 
