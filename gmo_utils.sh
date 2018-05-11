@@ -34,6 +34,18 @@ gg_new_branch() {
     git checkout -b "$1"
 }
 
+gg_diff() {
+    git diff
+}
+
+gg_diff_of() {
+    gg_diff "$1" "$2"
+}
+
+gg_diff_dev_cur() {
+  gg_diff_of develop $(gg_cur_branch)
+}
+
 gg_log_of() {
     git log --author="$1"
 }
