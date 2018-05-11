@@ -6,6 +6,10 @@ gg_cur_branch() {
     git branch -a | grep "*" | sed 's/* //g'
 }
 
+gg_find_branch() {
+    git branch -a | grep "$1"
+}
+
 gg_push() {
     git push origin $(gg_cur_branch)
 }
