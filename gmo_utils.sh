@@ -22,6 +22,10 @@ gg_merge() {
     git merge "$1"
 }
 
+gg_merge_dev() {
+    gg_merge develop
+}
+
 gg_checkout() {
     git checkout "$1"
 }
