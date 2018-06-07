@@ -108,6 +108,10 @@ gg_date_time() {
   while true; do echo "$(date '+%D %T' | toilet -f term -F border --gay)"; sleep 1; done
 }
 
+gg_fetch_all() {
+  git branch -a | grep remotes/origin/ | grep -v HEAD | sed -e 's/  remotes\/origin\//git reset --hard HEAD \&\& git checkout /g' > ../${PWD##*/}.sh && source ../${PWD##*/}.sh && rm ../${PWD##*/}.sh
+}
+
 gg_crawl() {
   lynx -dump "$1" | awk '/http/{print $2}' | grep "$2" > out.txt && wget -i  out.txt -P "$3"
 }
