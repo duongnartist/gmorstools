@@ -15,8 +15,7 @@ gg_branches() {
 }
 
 gg_cur_branch() {
-  cur_branch=${gg_branches | grep "*" | sed 's/* //g'}
-  gg_print "Branch hiện tại là $cur_branch"
+  gg_branches | grep "*" | sed 's/* //g'
 }
 
 gg_find_branch() {
