@@ -1,7 +1,8 @@
 gg_welcome() {
   toilet -F gay "Welcome to $(whoami)" | lolcat
-  toilet -F gay "iMac Late" | lolcat
-  toilet -F gay "2012" | lolcat
+  toilet -F gay "today is" | lolcat
+  toilet -F gay "$(date '+%D')" | lolcat
+  toilet -F gay "$(date '+%T')" | lolcat
 }
 
 gg_dev_pull() {
