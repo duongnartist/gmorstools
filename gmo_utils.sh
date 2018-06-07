@@ -164,7 +164,7 @@ gg_crawl() {
   download_to="$3"
   file_name="gg.temp"
   gg_print "Đang crawl nội dung..."
-  file_list=$(lynx -dump $parent_url | awk '/http/{print $2}' | grep $text_contain)
+  file_list=$(lynx -dump $parent_url | awk '/http/{print $2}' | grep $text_contain) | sort -u
   gg_print "Lưu các link trên vào file $file_name"
   gg_print $file_list
   echo $file_list > $file_name
