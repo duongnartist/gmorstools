@@ -24,7 +24,7 @@ gg_find_branch() {
 }
 
 gg_push() {
-    git push origin $(gg_cur_branch)
+    git push origin "$(gg_cur_branch)"
 }
 
 gg_merge() {
