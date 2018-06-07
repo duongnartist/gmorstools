@@ -1,5 +1,7 @@
 gg_welcome() {
-  gg_print "Chúc $(whoami) một ngày mới tốt lành!"
+  toilet -F gay "Welcome to $(whoami)" | lolcat
+  toilet -F gay "iMac Late" | lolcat
+  toilet -F gay "2012" | lolcat
 }
 
 gg_dev_pull() {
