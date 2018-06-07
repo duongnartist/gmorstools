@@ -142,10 +142,11 @@ gg_video_to_gif() {
 }
 
 gg_date_time() {
+  clear
   gg_print "Hỏi giờ á? Để xem nào!"
   sleep 2
   clear
-  while true; do echo "$(date '+%D %T' | toilet -f term -F border --gay)"; sleep 1; done
+  while true; do clear; gg_print "$(date '+%D %T')"; gg_print "Sắp đến giờ về chưa?"; sleep 1; done
   gg_print "Sắp đến giờ về chưa?"
 }
 
