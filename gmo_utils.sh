@@ -164,4 +164,23 @@ gg_print() {
   echo "$1" | toilet -f term -F border --gay
 }
 
+gg_download() {
+    youtube-dl -f mp4 -o video.mp4 "$1"
+    ffmpeg -i video.mp4 -ss 000 -t 30 video_00.mp4
+    ffmpeg -i video.mp4 -ss 030 -t 30 video_01.mp4
+    ffmpeg -i video.mp4 -ss 060 -t 30 video_02.mp4
+    ffmpeg -i video.mp4 -ss 090 -t 30 video_03.mp4
+    ffmpeg -i video.mp4 -ss 120 -t 30 video_04.mp4
+    ffmpeg -i video.mp4 -ss 150 -t 30 video_05.mp4
+    ffmpeg -i video.mp4 -ss 180 -t 30 video_06.mp4
+    ffmpeg -i video.mp4 -ss 210 -t 30 video_07.mp4
+    ffmpeg -i video.mp4 -ss 240 -t 30 video_08.mp4
+    ffmpeg -i video.mp4 -ss 270 -t 30 video_09.mp4
+    ffmpeg -i video.mp4 -ss 300 -t 30 video_10.mp4
+    ffmpeg -i video.mp4 -ss 330 -t 30 video_11.mp4
+    ffmpeg -i video.mp4 -ss 360 -t 30 video_13.mp4
+    ffmpeg -i video.mp4 -ss 390 -t 30 video_14.mp4
+    ffmpeg -i video.mp4 -ss 420 -t 30 video_15.mp4
+}
+
 gg_welcome
