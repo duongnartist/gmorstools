@@ -165,22 +165,68 @@ gg_print() {
 }
 
 gg_download() {
-    youtube-dl -f mp4 -o video.mp4 "$1"
-    ffmpeg -i video.mp4 -ss 000 -t 30 video_00.mp4
-    ffmpeg -i video.mp4 -ss 030 -t 30 video_01.mp4
-    ffmpeg -i video.mp4 -ss 060 -t 30 video_02.mp4
-    ffmpeg -i video.mp4 -ss 090 -t 30 video_03.mp4
-    ffmpeg -i video.mp4 -ss 120 -t 30 video_04.mp4
-    ffmpeg -i video.mp4 -ss 150 -t 30 video_05.mp4
-    ffmpeg -i video.mp4 -ss 180 -t 30 video_06.mp4
-    ffmpeg -i video.mp4 -ss 210 -t 30 video_07.mp4
-    ffmpeg -i video.mp4 -ss 240 -t 30 video_08.mp4
-    ffmpeg -i video.mp4 -ss 270 -t 30 video_09.mp4
-    ffmpeg -i video.mp4 -ss 300 -t 30 video_10.mp4
-    ffmpeg -i video.mp4 -ss 330 -t 30 video_11.mp4
-    ffmpeg -i video.mp4 -ss 360 -t 30 video_13.mp4
-    ffmpeg -i video.mp4 -ss 390 -t 30 video_14.mp4
-    ffmpeg -i video.mp4 -ss 420 -t 30 video_15.mp4
+    youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' -o "$2" "$1"
+}
+
+gg_convert_to_baseline() {
+  ffmpeg -i "$1" \
+        -c:v libx264 -preset slow -crf 22 \
+        -profile:v baseline -level 3.0 \
+        -movflags +faststart -pix_fmt yuv420p \
+        "$2"
+}
+
+gg_split_video() {
+  IN_FILE="$1"
+  OUT_FILE_FORMAT="$3"
+  typeset -i CHUNK_LEN
+  CHUNK_LEN="$2"
+   
+  DURATION_HMS=$(ffmpeg -i "$IN_FILE" 2>&1 | grep Duration | cut -f 4 -d ' ')
+  DURATION_H=$(echo "$DURATION_HMS" | cut -d ':' -f 1)
+  DURATION_M=$(echo "$DURATION_HMS" | cut -d ':' -f 2)
+  DURATION_S=$(echo "$DURATION_HMS" | cut -d ':' -f 3 | cut -d '.' -f 1)
+  let "DURATION = ( DURATION_H * 60 + DURATION_M ) * 60 + DURATION_S"
+   
+  if [ "$DURATION" = '0' ] ; then
+          echo "Invalid input video"
+          usage
+          exit 1
+  fi
+   
+  if [ "$CHUNK_LEN" = "0" ] ; then
+          echo "Invalid chunk size"
+          usage
+          exit 2
+  fi
+   
+  if [ -z "$OUT_FILE_FORMAT" ] ; then
+          FILE_EXT=$(echo "$IN_FILE" | sed 's/^.*\.\([a-zA-Z0-9]\+\)$/\1/')
+          FILE_NAME=$(echo "$IN_FILE" | sed 's/^\(.*\)\.[a-zA-Z0-9]\+$/\1/')
+          OUT_FILE_FORMAT="${FILE_NAME}-%03d.${FILE_EXT}"
+          echo "Using default output file format : $OUT_FILE_FORMAT"
+  fi
+   
+  N='1'
+  OFFSET='0'
+  let 'N_FILES = DURATION / CHUNK_LEN + 1'
+   
+  while [ "$OFFSET" -lt "$DURATION" ] ; do
+          OUT_FILE=$(printf "$OUT_FILE_FORMAT" "$N")
+          echo "writing $OUT_FILE ($N/$N_FILES)..."
+          ffmpeg -i "$IN_FILE" -vcodec copy -acodec copy -ss "$OFFSET" -t "$CHUNK_LEN" "$OUT_FILE"
+          let "N = N + 1"
+          let "OFFSET = OFFSET + CHUNK_LEN"
+  done
+}
+
+function usage {
+        echo "Usage : ffsplit.sh input.file chunk-duration [output-filename-format]"
+        echo -e "\t - input file may be any kind of file reconginzed by ffmpeg"
+        echo -e "\t - chunk duration must be in seconds"
+        echo -e "\t - output filename format must be printf-like, for example myvideo-part-%04d.avi"
+        echo -e "\t - if no output filename format is given, it will be computed\
+ automatically from input filename"
 }
 
 gg_welcome
