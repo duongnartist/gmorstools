@@ -229,4 +229,8 @@ function usage {
  automatically from input filename"
 }
 
+function tdresetdock {
+  defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock
+}
+
 gg_welcome
