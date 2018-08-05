@@ -1,174 +1,162 @@
-td_welcome() {
+tdwelcome() {
   toilet -F gay "Welcome to $(whoami)" | lolcat
   toilet -F gay "today is" | lolcat
   toilet -F gay "$(date '+%D')" | lolcat
   toilet -F gay "$(date '+%T')" | lolcat
 }
 
-td_dev_pull() {
-  td_fetch && td_checkout develop && td_pull
+tddevpull() {
+  tdfetch && tdcheckout develop && tdpull
 }
 
-td_branches() {
+tdbranches() {
   git branch -a
 }
 
-td_cur_branch() {
-  td_branches | grep "*" | sed 's/* //g'
+tdcurbranch() {
+  tdbranches | grep "*" | sed 's/* //g'
 }
 
-td_find_branch() {
-  td_branches | grep "$1"
+tdfindbranch() {
+  tdbranches | grep "$1"
 }
 
-td_push() {
-  git push origin $(td_cur_branch)
+tdpush() {
+  git push origin $(tdcur_branch)
 }
 
-td_merge() {
+tdmerge() {
   git merge "$1"
 }
 
-td_merge_dev() {
-  td_merge develop
+tdmergedev() {
+  tdmerge develop
 }
 
-td_checkout() {
+tdcheckout() {
   git checkout "$1"
 }
 
-td_add_commit() {
+tdaddcommit() {
   git add . && git commit -m "$1"
 }
 
-td_new_branch() {
+tdnewbranch() {
   git checkout -b "$1"
 }
 
-td_diff() {
+tddiff() {
   git diff
 }
 
-td_diff_of() {
-  td_diff "$1" "$2"
+tddiffof() {
+  tddiff "$1" "$2"
 }
 
-td_diff_dev_cur() {
-  td_diff_of develop $(td_cur_branch)
+tddiffdevcur() {
+  tddiff_of develop $(tdcur_branch)
 }
 
-td_log_of() {
+tdlogof() {
   git log --author="$1"
 }
 
-td_log() {
+tdlog() {
   git log --author=$(whoami)
 }
 
-td_log_today() {
-  git log --author=$(whoami) --after=$(td_one_day_ago)
+tdlogtoday() {
+  git log --author=$(whoami) --after=$(tdone_day_ago)
 }
 
-td_log_yesterday() {
-  git log --author=$(whoami) --after=$(td_two_day_ago) --before=$(td_one_day_ago)
+tdlogyesterday() {
+  git log --author=$(whoami) --after=$(tdtwo_day_ago) --before=$(tdone_day_ago)
 }
 
-td_reset() {
+tdreset() {
   git reset --hard HEAD
 }
 
-td_status() {
+tdstatus() {
   git status
 }
 
-td_pull() {
+tdpull() {
   git pull
 }
 
-td_fetch() {
+tdfetch() {
   git fetch
 }
 
-td_one_day_ago() {
+tdonedayago() {
   date -v-1d +%Y-%m-%d
 }
 
-td_two_day_ago() {
+tdtwodayago() {
   date -v-2d +%Y-%m-%d
 }
 
-td_kmk_ad() {
-  cd ~/Desktop/projects/kmk_ad
-}
-
-td_kmk_ios() {
-  cd ~/Desktop/projects/kmk_ios
-}
-
-td_kmk_doc() {
-  cd ~/Desktop/projects/kmk_documents
-}
-
-td_video_to_gif() {
+tdvideotogif() {
   video_file="$1"
   image_file="${video_file%%.*}.png"
   gif_file="${video_file%%.*}.gif"
   out_fps="${3:-10}"
   out_scale="${2:-320}"
-  td_print "Chuyển đổi từ đoạn phim $video_file này sang ảnh động $gif_file à? 10 lít nhé!"
+  tdprint "Chuyển đổi từ đoạn phim $video_file này sang ảnh động $gif_file à? 10 lít nhé!"
 
   ffmpeg -y -i $video_file -vf fps=$out_fps,scale=$out_scale:-1:flags=lanczos,palettegen $image_file
 
   ffmpeg -i $video_file -i $image_file -filter_complex "fps=$out_fps,scale=$out_scale:-1:flags=lanczos[x];[x][1:v]paletteuse" $gif_file
   rm $image_file
 
-  td_print "Chuyển khoản vào số tài khoản Vietcombank của ${whoami} nhé!"
+  tdprint "Chuyển khoản vào số tài khoản Vietcombank của ${whoami} nhé!"
 }
 
-td_date_time() {
+tddatetime() {
   clear
-  td_print "Hỏi giờ á? Để xem nào!"
+  tdprint "Hỏi giờ á? Để xem nào!"
   sleep 2
   clear
-  while true; do clear; td_print "$(date '+%D %T')"; td_print "Sắp đến giờ về chưa?"; sleep 1; done
-  td_print "Sắp đến giờ về chưa?"
+  while true; do clear; tdprint "$(date '+%D %T')"; tdprint "Sắp đến giờ về chưa?"; sleep 1; done
+  tdprint "Sắp đến giờ về chưa?"
 }
 
-td_fetch_all() {
-  td_print "Úi chà kéo hết về á? Đi xuống tầng 4 mua lon Cocacola lên đây đi!"
+tdfetchall() {
+  tdprint "Úi chà kéo hết về á? Đi xuống tầng 4 mua lon Cocacola lên đây đi!"
   git branch -a | grep remotes/origin/ | grep -v HEAD | sed -e 's/  remotes\/origin\//git reset --hard HEAD \&\& git checkout /g' > ../${PWD##*/}.sh && source ../${PWD##*/}.sh && rm ../${PWD##*/}.sh
-  td_print "Uống hết mấy lon rồi? Lâu quá phải không?"
+  tdprint "Uống hết mấy lon rồi? Lâu quá phải không?"
 }
 # crawl web
 # $1: text contain in sub url
 # $2: parent url
 # $3: path to save file
-td_crawl() {
+tdcrawl() {
   text_contain="$1"
   parent_url="$2"
   download_to="$3"
   file_name="gg.temp"
-  td_print "Đang crawl nội dung..."
+  tdprint "Đang crawl nội dung..."
   file_list=$(lynx -dump $parent_url | awk '/http/{print $2}' | grep $text_contain) | sort -u
-  td_print "Lưu các link trên vào file $file_name"
-  td_print $file_list
+  tdprint "Lưu các link trên vào file $file_name"
+  tdprint $file_list
   echo $file_list > $file_name
-  td_print "Đang download các file trên về thư mục $download_to ..."
+  tdprint "Đang download các file trên về thư mục $download_to ..."
   wget -q -i $file_name -P $download_to
-  td_print "Xóa tệp $file_name"
+  tdprint "Xóa tệp $file_name"
   rm $file_name
-  td_print "Xong phim!"
+  tdprint "Xong phim!"
 }
 
-td_print() {
+tdprint() {
   echo "$1" | toilet -f term -F border --gay
 }
 
-td_download() {
+tddownload() {
     youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' -o "$2" "$1"
 }
 
-td_convert_to_baseline() {
+tdconverttobaseline() {
   ffmpeg -i "$1" \
         -c:v libx264 -preset slow -crf 22 \
         -profile:v baseline -level 3.0 \
@@ -176,7 +164,7 @@ td_convert_to_baseline() {
         "$2"
 }
 
-td_split_video() {
+tdsplitvideo() {
   IN_FILE="$1"
   OUT_FILE_FORMAT="$3"
   typeset -i CHUNK_LEN
@@ -229,12 +217,10 @@ function usage {
  automatically from input filename"
 }
 
-function td_reset_dock {
+function tdresetdock {
   defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock
 }
 
-function td_enable_build_time {
+function tdenablebuildtime {
   defaults write com.apple.dt.Xcode ShowBuildOperationDuration YES
 }
-
-td_welcome
