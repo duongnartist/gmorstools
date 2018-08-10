@@ -1,12 +1,9 @@
-tdwelcome() {
-  toilet -F gay "Welcome to $(whoami)" | lolcat
-  toilet -F gay "today is" | lolcat
-  toilet -F gay "$(date '+%D')" | lolcat
-  toilet -F gay "$(date '+%T')" | lolcat
+tdWelcome() {
+  toilet -F gay "おはいよ$(whoami)" | lolcat
 }
 
-tddevpull() {
-  tdfetch && tdcheckout develop && tdpull
+tdFetchAndPullDevelop() {
+  tdFetch && tdCheckout develop && tdPull
 }
 
 tdbranches() {
@@ -22,7 +19,7 @@ tdfindbranch() {
 }
 
 tdpush() {
-  git push origin $(tdcur_branch)
+  git push origin $(tdcurbranch)
 }
 
 tdmerge() {
@@ -33,7 +30,15 @@ tdmergedev() {
   tdmerge develop
 }
 
-tdcheckout() {
+tdGetFirstSearchResultOf() {
+  tdfindbranch "$1" | grep -v "remotes"
+}
+
+tdCheckoutBranchId() {
+  tdCheckout $(tdGetFirstSearchResultOf "$1")
+}
+
+tdCheckout() {
   git checkout "$1"
 }
 
@@ -54,7 +59,7 @@ tddiffof() {
 }
 
 tddiffdevcur() {
-  tddiff_of develop $(tdcur_branch)
+  tddiffof develop $(tdcurbranch)
 }
 
 tdlogof() {
@@ -66,11 +71,11 @@ tdlog() {
 }
 
 tdlogtoday() {
-  git log --author=$(whoami) --after=$(tdone_day_ago)
+  git log --author=$(whoami) --after=$(tdonedayago)
 }
 
 tdlogyesterday() {
-  git log --author=$(whoami) --after=$(tdtwo_day_ago) --before=$(tdone_day_ago)
+  git log --author=$(whoami) --after=$(tdtwodayago) --before=$(tdonedayago)
 }
 
 tdreset() {
@@ -81,11 +86,11 @@ tdstatus() {
   git status
 }
 
-tdpull() {
+tdPull() {
   git pull
 }
 
-tdfetch() {
+tdFetch() {
   git fetch
 }
 
