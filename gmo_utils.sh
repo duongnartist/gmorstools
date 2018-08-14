@@ -2,6 +2,10 @@ tdwelcome() {
   toilet -F gay "おはいよ$(whoami)" | lolcat
 }
 
+tdfixissue() {
+  tdnewbranch "update/duongnt/GMOFXNEO-$1-$2"
+}
+
 tddevpull() {
   tdfetch && tdcheckout develop && tdpll
 }
