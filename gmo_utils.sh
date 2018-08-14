@@ -1,9 +1,9 @@
-tdWelcome() {
+tdwelcome() {
   toilet -F gay "おはいよ$(whoami)" | lolcat
 }
 
-tdFetchAndPullDevelop() {
-  tdFetch && tdCheckout develop && tdPull
+tddevpull() {
+  tdfetch && tdcheckout develop && tdpll
 }
 
 tdbranches() {
@@ -18,7 +18,7 @@ tdfindbranch() {
   tdbranches | grep "$1"
 }
 
-tdpush() {
+tdpsh() {
   git push origin $(tdcurbranch)
 }
 
@@ -30,15 +30,15 @@ tdmergedev() {
   tdmerge develop
 }
 
-tdGetFirstSearchResultOf() {
+tdid() {
   tdfindbranch "$1" | grep -v "remotes"
 }
 
-tdCheckoutBranchId() {
-  tdCheckout $(tdGetFirstSearchResultOf "$1")
+tdgoto() {
+  tdcheckout $(tdid "$1")
 }
 
-tdCheckout() {
+tdcheckout() {
   git checkout "$1"
 }
 
@@ -86,11 +86,11 @@ tdstatus() {
   git status
 }
 
-tdPull() {
+tdpll() {
   git pull
 }
 
-tdFetch() {
+tdfetch() {
   git fetch
 }
 
@@ -108,29 +108,17 @@ tdvideotogif() {
   gif_file="${video_file%%.*}.gif"
   out_fps="${3:-10}"
   out_scale="${2:-320}"
-  tdprint "Chuyển đổi từ đoạn phim $video_file này sang ảnh động $gif_file à? 10 lít nhé!"
-
   ffmpeg -y -i $video_file -vf fps=$out_fps,scale=$out_scale:-1:flags=lanczos,palettegen $image_file
-
   ffmpeg -i $video_file -i $image_file -filter_complex "fps=$out_fps,scale=$out_scale:-1:flags=lanczos[x];[x][1:v]paletteuse" $gif_file
   rm $image_file
-
-  tdprint "Chuyển khoản vào số tài khoản Vietcombank của ${whoami} nhé!"
 }
 
 tddatetime() {
-  clear
-  tdprint "Hỏi giờ á? Để xem nào!"
-  sleep 2
-  clear
   while true; do clear; tdprint "$(date '+%D %T')"; tdprint "Sắp đến giờ về chưa?"; sleep 1; done
-  tdprint "Sắp đến giờ về chưa?"
 }
 
 tdfetchall() {
-  tdprint "Úi chà kéo hết về á? Đi xuống tầng 4 mua lon Cocacola lên đây đi!"
   git branch -a | grep remotes/origin/ | grep -v HEAD | sed -e 's/  remotes\/origin\//git reset --hard HEAD \&\& git checkout /g' > ../${PWD##*/}.sh && source ../${PWD##*/}.sh && rm ../${PWD##*/}.sh
-  tdprint "Uống hết mấy lon rồi? Lâu quá phải không?"
 }
 # crawl web
 # $1: text contain in sub url
