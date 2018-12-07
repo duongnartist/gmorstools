@@ -27,7 +27,7 @@ tdGitStatus() {
 }
 
 tdGitCommit() {
-	git commit "$1"
+	git commit -m "$1"
 }
 
 tdGitAdd() {
@@ -36,6 +36,7 @@ tdGitAdd() {
 
 tdGitAddAll() {
 	tdGitAdd .
+	tdGitStatus
 }
 
 tdGitPushOrigin() {
