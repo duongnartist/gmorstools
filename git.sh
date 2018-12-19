@@ -63,4 +63,14 @@ tdGitMergeDevelop() {
 	tdGitMerge develop
 }
 
+tdGitReset() {
+    git reset --hard HEAD
+}
 
+tdToolFolder() {
+    cd ~/artstools
+}
+
+tdToolEdit() {
+    subl ~/artstools/git.sh
+}
