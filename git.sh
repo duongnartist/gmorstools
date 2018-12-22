@@ -39,12 +39,25 @@ tdGitAddAll() {
 	tdGitStatus
 }
 
+tdGitPushCustomer() {
+  	git push customer "$1"
+}
+
 tdGitPushOrigin() {
   	git push origin "$1"
 }
 
+tdGitPushCustomerCurrentBranch() {
+  	tdGitPushCustomer $(tdGitCurrentBranch)
+}
+
 tdGitPushOriginCurrentBranch() {
   	tdGitPushOrigin $(tdGitCurrentBranch)
+}
+
+tdGitPushAll() {
+	tdGitPushCustomerCurrentBranch
+	tdGitPushOriginCurrentBranch
 }
 
 tdGitLog() {
@@ -63,4 +76,11 @@ tdGitMergeDevelop() {
 	tdGitMerge develop
 }
 
+tdGitDiff() {
+	git diff
+}
+
+tdProjectGroxr() {
+	cd ~/projects/groxr/ios
+}
 
