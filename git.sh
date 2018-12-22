@@ -23,20 +23,20 @@ tdGitCurrentBranch() {
 }
 
 tdGitStatus() {
-	git status
+    git status
 }
 
 tdGitCommit() {
-	git commit -m "$1"
+    git commit -m "$1"
 }
 
 tdGitAdd() {
-	git add "$1"
+    git add "$1"
 }
 
 tdGitAddAll() {
-	tdGitAdd .
-	tdGitStatus
+    tdGitAdd .
+    tdGitStatus
 }
 
 tdGitPushCustomer() {
@@ -56,31 +56,38 @@ tdGitPushOriginCurrentBranch() {
 }
 
 tdGitPushAll() {
-	tdGitPushCustomerCurrentBranch
-	tdGitPushOriginCurrentBranch
+    tdGitPushCustomerCurrentBranch
+    tdGitPushOriginCurrentBranch
 }
 
 tdGitLog() {
-	git log
+    git log
 }
 
 tdGitLogGraph() {
-	git log --graph
+    git log --graph
 }
 
 tdGitMerge() {
-	git merge "$1"
+    git merge "$1"
 }
 
 tdGitMergeDevelop() {
-	tdGitMerge develop
+    tdGitMerge develop
 }
 
 tdGitDiff() {
-	git diff
+    git diff
 }
 
-tdProjectGroxr() {
-	cd ~/projects/groxr/ios
+tdGitReset() {
+    git reset --hard HEAD
 }
 
+tdToolFolder() {
+    cd ~/artstools
+}
+
+tdToolEdit() {
+    subl ~/artstools/git.sh
+}
