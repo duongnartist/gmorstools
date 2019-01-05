@@ -23,44 +23,61 @@ tdGitCurrentBranch() {
 }
 
 tdGitStatus() {
-	git status
+    git status
 }
 
 tdGitCommit() {
-	git commit -m "$1"
+    git commit -m "$1"
 }
 
 tdGitAdd() {
-	git add "$1"
+    git add "$1"
 }
 
 tdGitAddAll() {
-	tdGitAdd .
-	tdGitStatus
+    tdGitAdd .
+    tdGitStatus
+}
+
+tdGitPushCustomer() {
+  	git push customer "$1"
 }
 
 tdGitPushOrigin() {
   	git push origin "$1"
 }
 
+tdGitPushCustomerCurrentBranch() {
+  	tdGitPushCustomer $(tdGitCurrentBranch)
+}
+
 tdGitPushOriginCurrentBranch() {
   	tdGitPushOrigin $(tdGitCurrentBranch)
 }
 
+tdGitPushAll() {
+    tdGitPushCustomerCurrentBranch
+    tdGitPushOriginCurrentBranch
+}
+
 tdGitLog() {
-	git log
+    git log
 }
 
 tdGitLogGraph() {
-	git log --graph
+    git log --graph
 }
 
 tdGitMerge() {
-	git merge "$1"
+    git merge "$1"
 }
 
 tdGitMergeDevelop() {
-	tdGitMerge develop
+    tdGitMerge develop
+}
+
+tdGitDiff() {
+    git diff
 }
 
 tdGitReset() {
