@@ -18,3 +18,5 @@ brew install curl
 echo "Installed Curl"
 brew install wget
 echo "Installed Wget"
+
+ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" ~/subl
