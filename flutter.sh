@@ -6,3 +6,5 @@ flutter_install_deploy_to_ios() {
     brew install ideviceinstaller ios-deploy cocoapods
     pod setup
 }
+
+flutter_install_deploy_to_ios
