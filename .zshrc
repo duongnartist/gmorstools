@@ -138,11 +138,16 @@ POWERLEVEL9K_CUSTOM_JAVASCRIPT_BACKGROUND="yellow"
 
 # Load Nerd Fonts with Powerlevel9k theme for Zsh
 REACT_EDITOR=codePOWERLEVEL9K_MODE='nerdfont-complete'
-source  ~/powerlevel9k/powerlevel9k.zsh-theme
+source ~/powerlevel9k/powerlevel9k.zsh-theme
+source ~/art-tools/git.sh
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-export PATH="$PATH:$HOME/flutter/bin"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Flutter Home
+export PATH="$PATH:$HOME/flutter/bin"
+export PATH="$PATH:/Volumes/DuongNARtist/flutter/bin"
+
+# Python Home
+export PATH="$PATH:/usr/local/bin/python"
+export PATH="$PATH:/usr/bin/python"
+export PATH="$PATH:/usr/local/Cellar/python/3.7.5/Frameworks/Python.framework/Versions/3.7/bin"
